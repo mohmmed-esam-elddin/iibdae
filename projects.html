@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المشاريع - إبداع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط CSS الأساسية (نفس أنماط الصفحة الرئيسية) */
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #564fd8;
+            --secondary: #FF6584;
+            --dark: #2A2A3C;
+            --dark-light: #3a3a4c;
+            --light: #F7F7FF;
+            --accent: #36D1DC;
+            --accent-gradient: linear-gradient(90deg, var(--accent), #5B86E5);
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* أنماط الصفحة المحددة */
+        .page-header {
+            padding: 80px 0 40px;
+            background: white;
+        }
+        
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .page-header p {
+            text-align: center;
+            color: var(--dark-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .filters {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .filter-group select, .filter-group input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: var(--light);
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .search-box button {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .project-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .project-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: var(--accent-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .project-item:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-overlay button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .project-overlay button:first-child {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .project-overlay button:last-child {
+            background: white;
+            color: var(--dark);
+        }
+        
+        .project-details {
+            padding: 20px;
+        }
+        
+        .project-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-details p {
+            color: var(--dark-light);
+            margin-bottom: 15px;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .project-meta span {
+            font-size: 0.9rem;
+            color: var(--dark-light);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 80px;
+        }
+        
+        .pagination button {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            border-radius: 8px;
+            background: white;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+        
+        .pagination button.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* التصميم المتجاوب */
+        @media (max-width: 992px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+        }
+        
+        /* أنماط التذييل والشريط العلوي (نفس الصفحة الرئيسية) */
+        header {
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .auth-buttons button {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .auth-buttons .login {
+            background: transparent;
+            color: var(--dark);
+        }
+        
+        .auth-buttons .signup {
+            background: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+            padding-right: 5px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1>إبداع</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="projects.html" class="active">المشاريع</a></li>
+                    <li><a href="creators.html">المبدعون</a></li>
+                    <li><a href="blog.html">المدونة</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="login">تسجيل الدخول</button>
+                    <button class="signup">انضم إلينا</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h2>استكشف المشاريع الإبداعية</h2>
+            <p>اكتشف أعمالًا مذهلة من مصممين ومبدعين حول العالم</p>
+        </div>
+    </section>
+    
+    <section class="filters-container">
+        <div class="container">
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="category">التصنيف:</label>
+                    <select id="category">
+                        <option value="all">جميع التصنيفات</option>
+                        <option value="graphic">تصميم جرافيك</option>
+                        <option value="ui">تصميم واجهات</option>
+                        <option value="art">فن رقمي</option>
+                        <option value="photo">التصوير الفوتوغرافي</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sort">ترتيب حسب:</label>
+                    <select id="sort">
+                        <option value="new">الأحدث</option>
+                        <option value="popular">الأكثر شيوعًا</option>
+                        <option value="rated">الأعلى تقييمًا</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="search">بحث:</label>
+                    <input type="text" id="search" placeholder="ابحث عن مشاريع...">
+                </div>
+                
+                <div class="search-box">
+                    <button>بحث</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="projects-container">
+        <div class="container">
+            <div class="projects-grid">
+                <div class="project-item">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <button>عرض المشروع</button>
+                            <button>إعجاب</button>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>تصميم هوية بصرية لمطعم</h4>
+                        <p>تصميم جرافيك</p>
+                        <div class="project-meta">
+                            <span class="likes">245 إعجاب</span>
+                            <span class="views">1.2k مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <button>عرض المشروع</button>
+                            <button>إعجاب</button>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>تصميم تطبيق للهواتف الذكية</h4>
+                        <p>تجربة مستخدم</p>
+                        <div class="project-meta">
+                            <span class="likes">189 إعجاب</span>
+                            <span class="views">980 مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <button>عرض المشروع</button>
+                            <button>إعجاب</button>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>جدارية فنية تفاعلية</h4>
+                        <p>فن رقمي</p>
+                        <div class="project-meta">
+                            <span class="likes">312 إعجاب</span>
+                            <span class="views">1.5k مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <button>عرض المشروع</button>
+                            <button>إعجاب</button>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>سلسلة صور لمنطقة الدرعية</h4>
+                        <p>التصوير الفوتوغرافي</p>
+                        <div class="project-meta">
+                            <span class="likes">176 إعجاب</span>
+                            <span class="views">875 مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <button>عرض المشروع</button>
+                            <button>إعجاب</button>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>تصميم غلاف لرواية</h4>
+                        <p>تصميم جرافيك</p>
+                        <div class="project-meta">
+                            <span class="likes">201 إعجاب</span>
+                            <span class="views">1.1k مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <button>عرض المشروع</button>
+                            <button>إعجاب</button>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h4>نماذج ثلاثية الأبعاد للمنتجات</h4>
+                        <p>تصميم ثلاثي الأبعاد</p>
+                        <div class="project-meta">
+                            <span class="likes">278 إعجاب</span>
+                            <span class="views">1.3k مشاهدة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button>السابق</button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>التالي</button>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>إبداع</h4>
+                    <p>منصة رائدة لعرض الأعمال الإبداعية وتوصيل المبدعين مع العالم</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="creators.html">المبدعون</a></li>
+                        <li><a href="blog.html">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>الدعم</h4>
+                    <ul>
+                        <li><a href="#">المساعدة</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>تابعنا</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 إبداع. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إبداع - منصة الأعمال الإبداعية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #564fd8;
+            --secondary: #FF6584;
+            --dark: #2A2A3C;
+            --dark-light: #3a3a4c;
+            --light: #F7F7FF;
+            --accent: #36D1DC;
+            --accent-gradient: linear-gradient(90deg, var(--accent), #5B86E5);
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* التصميم المتجاوب */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+        }
+        
+        /* الشريط العلوي */
+        header {
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .auth-buttons button {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .auth-buttons .login {
+            background: transparent;
+            color: var(--dark);
+        }
+        
+        .auth-buttons .signup {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .auth-buttons .signup:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* قسم الهيرو */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            padding: 50px 0;
+        }
+        
+        .hero-content {
+            flex: 1;
+            padding-left: 50px;
+        }
+        
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-content h2 span {
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .hero-content h2 span:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            bottom: 5px;
+            right: 0;
+            background-color: rgba(108, 99, 255, 0.2);
+            z-index: -1;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--dark-light);
+        }
+        
+        .hero-buttons button {
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-left: 15px;
+        }
+        
+        .hero-buttons button:first-child {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .hero-buttons button:first-child:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+        
+        .hero-buttons button.outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .hero-buttons button.outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            height: 500px;
+        }
+        
+        .floating-shapes {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 5s infinite ease-in-out;
+        }
+        
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent-gradient);
+            top: 50px;
+            right: 50px;
+            animation-delay: 0s;
+        }
+        
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            background: var(--primary);
+            bottom: 100px;
+            right: 200px;
+            animation-delay: 1s;
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary);
+            top: 150px;
+            left: 100px;
+            animation-delay: 2s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        
+        /* قسم الميزات */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .features h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+        
+        .features h3 span {
+            color: var(--primary);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--light);
+            padding: 40px 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* قسم المشاريع */
+        .showcase {
+            padding: 100px 0;
+        }
+        
+        .showcase h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+        
+        .showcase h3 span {
+            color: var(--primary);
+        }
+        
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: var(--accent-gradient);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-info {
+            padding: 20px;
+        }
+        
+        .project-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-info p {
+            color: var(--dark-light);
+            margin-bottom: 15px;
+        }
+        
+        .creator {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .view-all {
+            display: block;
+            margin: 0 auto;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .view-all:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(108, 99, 255, 0.3);
+        }
+        
+        /* قسم الآراء */
+        .testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .testimonials h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+        
+        .testimonials h3 span {
+            color: var(--primary);
+        }
+        
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .testimonial {
+            background: var(--light);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .testimonial p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .testimonial p:before,
+        .testimonial p:after {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+        }
+        
+        .testimonial p:before {
+            top: -20px;
+            right: -10px;
+        }
+        
+        .testimonial p:after {
+            bottom: -40px;
+            left: -10px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .author-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            margin-left: 15px;
+        }
+        
+        .author-info h5 {
+            font-size: 1.2rem;
+        }
+        
+        /* قسم الدعوة للعمل */
+        .cta {
+            padding: 100px 0;
+            text-align: center;
+            background: var(--accent-gradient);
+            color: white;
+        }
+        
+        .cta h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta button {
+            padding: 15px 50px;
+            background: white;
+            color: var(--primary);
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .cta button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* التذييل */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+            padding-right: 5px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* التصميم المتجاوب */
+        @media (max-width: 992px) {
+            .features-grid,
+            .showcase-grid,
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                padding-left: 0;
+                margin-bottom: 50px;
+            }
+            
+            .hero-content h2 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .features-grid,
+            .showcase-grid,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons button {
+                margin: 10px;
+            }
+            
+            .feature-card,
+            .project-card {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1>إبداع</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="projects.html">المشاريع</a></li>
+                    <li><a href="#">المبدعون</a></li>
+                    <li><a href="#">المدونة</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="login">تسجيل الدخول</button>
+                    <button class="signup">انضم إلينا</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>اكتشف عالمًا من <span>الإبداع</span></h2>
+                <p>منصة رائدة تجمع المبدعين من مختلف المجالات لعرض أعمالهم واستلهام الأفكار الجديدة</p>
+                <div class="hero-buttons">
+                    <button>استعرض المشاريع</button>
+                    <button class="outline">انضم كمبدع</button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-shapes">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h3>لماذا تختار <span>إبداع</span>؟</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h4>عرض متقدم</h4>
+                    <p>عرض أعمالك بجودة عالية وتقنيات عرض مبتكرة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>مجتمع نشط</h4>
+                    <p>انضم إلى آلاف المبدعين وشارك خبراتك</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h4>دفع للإبداع</h4>
+                    <p>بيع أعمالك مباشرة من خلال المنصة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="showcase">
+        <div class="container">
+            <h3>أبرز <span>المشاريع</span></h3>
+            <div class="showcase-grid">
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h4>تصميم شعار مبتكر</h4>
+                        <p>تصميم جرافيك</p>
+                        <div class="creator">بواسطة أحمد سليمان</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h4>تصميم تطبيق جوال</h4>
+                        <p>تجربة مستخدم</p>
+                        <div class="creator">بواسطة سارة محمد</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h4>مجسم فني تفاعلي</h4>
+                        <p>فن رقمي</p>
+                        <div class="creator">بواسطة خالد الفهد</div>
+                    </div>
+                </div>
+            </div>
+            <button class="view-all">عرض الكل</button>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <div class="container">
+            <h3>آراء <span>المبدعين</span></h3>
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <p>"إبداع ساعدني في الوصول إلى عملاء جدد ومشاريع مميزة لم أكن أحلم بها من قبل"</p>
+                    <div class="testimonial-author">
+                        <div class="author-image"></div>
+                        <div class="author-info">
+                            <h5>لمى عبد الله</h5>
+                            <p>مصممة جرافيك</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="container">
+            <h3>جاهز لعرض <span>إبداعاتك</span>؟</h3>
+            <p>انضم إلى آلاف المبدعين واستفد من فرص العمل والتعاون</p>
+            <button>ابدأ الآن</button>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>إبداع</h4>
+                    <p>منصة رائدة لعرض الأعمال الإبداعية وتوصيل المبدعين مع العالم</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">المشاريع</a></li>
+                        <li><a href="#">المبدعون</a></li>
+                        <li><a href="#">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>الدعم</h4>
+                    <ul>
+                        <li><a href="Help.html">المساعدة</a></li>
+                        <li><a href="Help.html">الأسئلة الشائعة</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>تابعنا</h4>
+                    <div class="social-icons">
+                        <a href="#">T</a>
+                        <a href="#">I</a>
+                        <a href="#">L</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 إبداع. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

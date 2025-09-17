@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المبدعون - إبداع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* أنماط CSS الأساسية (نفس أنماط الصفحة الرئيسية) */
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #564fd8;
+            --secondary: #FF6584;
+            --dark: #2A2A3C;
+            --dark-light: #3a3a4c;
+            --light: #F7F7FF;
+            --accent: #36D1DC;
+            --accent-gradient: linear-gradient(90deg, var(--accent), #5B86E5);
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* أنماط الصفحة المحددة */
+        .page-header {
+            padding: 80px 0 40px;
+            background: white;
+        }
+        
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .page-header p {
+            text-align: center;
+            color: var(--dark-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .creators-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .creator-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .creator-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .creator-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 30px auto 20px;
+            background: var(--accent-gradient);
+            position: relative;
+        }
+        
+        .creator-info {
+            padding: 20px;
+        }
+        
+        .creator-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .creator-info p {
+            color: var(--dark-light);
+            margin-bottom: 15px;
+        }
+        
+        .creator-stats {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            margin: 0 10px;
+            text-align: center;
+        }
+        
+        .stat .number {
+            display: block;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .stat .label {
+            font-size: 0.8rem;
+            color: var(--dark-light);
+        }
+        
+        .creator-actions {
+            padding: 0 20px 20px;
+        }
+        
+        .creator-actions button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            background: var(--primary);
+            color: white;
+        }
+        
+        .creator-actions button:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* التصميم المتجاوب */
+        @media (max-width: 992px) {
+            .creators-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .creators-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .creators-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* أنماط التذييل والشريط العلوي (نفس الصفحة الرئيسية) */
+        header {
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .auth-buttons button {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .auth-buttons .login {
+            background: transparent;
+            color: var(--dark);
+        }
+        
+        .auth-buttons .signup {
+            background: var(--primary);
+            color: white;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+            padding-right: 5px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1>إبداع</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="projects.html">المشاريع</a></li>
+                    <li><a href="creators.html" class="active">المبدعون</a></li>
+                    <li><a href="blog.html">المدونة</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="login">تسجيل الدخول</button>
+                    <button class="signup">انضم إلينا</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h2>تعرف على مبدعينا</h2>
+            <p>اكتشف مواهب مبدعة من مختلف التخصصات والفنون</p>
+        </div>
+    </section>
+    
+    <section class="creators-container">
+        <div class="container">
+            <div class="creators-grid">
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>أحمد سليمان</h4>
+                        <p>مصمم جرافيك</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">42</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">1.2k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>سارة محمد</h4>
+                        <p>مصممة واجهات</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">35</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">980</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>خالد الفهد</h4>
+                        <p>فنان رقمي</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">28</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">1.5k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>لمى عبد الله</h4>
+                        <p>مصورة فوتوغرافية</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">51</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">2.1k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>فهد العتيبي</h4>
+                        <p>مصمم ثلاثي الأبعاد</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">37</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">1.7k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>نورة القحطاني</h4>
+                        <p>رسامة توضيحية</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">44</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">1.8k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>محمد الشمري</h4>
+                        <p>مطور واجهات</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">39</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">1.4k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+                
+                <div class="creator-card">
+                    <div class="creator-avatar"></div>
+                    <div class="creator-info">
+                        <h4>أمل السعد</h4>
+                        <p>مصممة أزياء</p>
+                    </div>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span class="number">32</span>
+                            <span class="label">مشروع</span>
+                        </div>
+                        <div class="stat">
+                            <span class="number">1.6k</span>
+                            <span class="label">متابع</span>
+                        </div>
+                    </div>
+                    <div class="creator-actions">
+                        <button>عرض الملف</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>إبداع</h4>
+                    <p>منصة رائدة لعرض الأعمال الإبداعية وتوصيل المبدعين مع العالم</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="creators.html">المبدعون</a></li>
+                        <li><a href="blog.html">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>الدعم</h4>
+                    <ul>
+                        <li><a href="Help.html">المساعدة</a></li>
+                        <li><a href="Help.html">الأسئلة الشائعة</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>تابعنا</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 إبداع. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

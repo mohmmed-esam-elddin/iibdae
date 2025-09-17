@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعدة والأسئلة الشائعة - إبداع</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #564fd8;
+            --secondary: #FF6584;
+            --dark: #2A2A3C;
+            --dark-light: #3a3a4c;
+            --light: #F7F7FF;
+            --accent: #36D1DC;
+            --accent-gradient: linear-gradient(90deg, var(--accent), #5B86E5);
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* الشريط العلوي */
+        header {
+            background-color: var(--light);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo h1 {
+            color: var(--primary);
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 0 15px;
+        }
+        
+        .nav-links a {
+            font-weight: 600;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after, .nav-links a.active:after {
+            width: 100%;
+        }
+        
+        .auth-buttons button {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .auth-buttons .login {
+            background: transparent;
+            color: var(--dark);
+        }
+        
+        .auth-buttons .signup {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .auth-buttons .signup:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* رأس الصفحة */
+        .page-header {
+            padding: 100px 0 60px;
+            background: var(--accent-gradient);
+            color: white;
+            text-align: center;
+        }
+        
+        .page-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* قسم البحث */
+        .help-search {
+            padding: 50px 0;
+            background: white;
+        }
+        
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .search-container h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+        
+        .search-box button {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        
+        .popular-topics {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .topic-tag {
+            padding: 8px 20px;
+            background: var(--light);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .topic-tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* قسم الأسئلة الشائعة */
+        .faq-section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h3 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .section-title p {
+            color: var(--dark-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .category-btn {
+            padding: 12px 25px;
+            background: white;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .category-btn.active, .category-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .faq-question span {
+            flex: 1;
+        }
+        
+        .faq-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 20px 20px;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* قسم المساعدة */
+        .help-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .help-card {
+            background: var(--light);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .help-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .help-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .help-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .help-card p {
+            color: var(--dark-light);
+            margin-bottom: 20px;
+        }
+        
+        .help-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .help-link i {
+            margin-right: 5px;
+            transition: var(--transition);
+        }
+        
+        .help-link:hover i {
+            transform: translateX(-5px);
+        }
+        
+        /* قسم التواصل */
+        .contact-help {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .contact-card {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .contact-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .contact-card p {
+            color: var(--dark-light);
+            margin-bottom: 30px;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .contact-btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .contact-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .contact-btn.outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* التذييل */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h4:after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+            bottom: 0;
+            right: 0;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            opacity: 1;
+            color: var(--primary);
+            padding-right: 5px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* التصميم المتجاوب */
+        @media (max-width: 992px) {
+            .help-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .page-header h2 {
+                font-size: 2.2rem;
+            }
+            
+            .help-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .faq-categories {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <h1>إبداع</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="projects.html">المشاريع</a></li>
+                    <li><a href="creators.html">المبدعون</a></li>
+                    <li><a href="blog.html">المدونة</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <li><a href="help.html" class="active">المساعدة</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <button class="login">تسجيل الدخول</button>
+                    <button class="signup">انضم إلينا</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h2>مركز المساعدة</h2>
+            <p>ابحث عن إجابات للأسئلة الشائعة أو تواصل مع فريق الدعم</p>
+        </div>
+    </section>
+    
+    <section class="help-search">
+        <div class="container">
+            <div class="search-container">
+                <h3>كيف يمكننا مساعدتك؟</h3>
+                <div class="search-box">
+                    <input type="text" placeholder="ابحث في الأسئلة الشائعة...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="popular-topics">
+                    <a href="#" class="topic-tag">إنشاء حساب</a>
+                    <a href="#" class="topic-tag">إضافة مشروع</a>
+                    <a href="#" class="topic-tag">الاشتراكات</a>
+                    <a href="#" class="topic-tag">المدفوعات</a>
+                    <a href="#" class="topic-tag">الحساب</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h3>الأسئلة الشائعة</h3>
+                <p>إجابات على أكثر الأسئلة التي تردنا من مستخدمينا</p>
+            </div>
+            
+            <div class="faq-categories">
+                <button class="category-btn active">عام</button>
+                <button class="category-btn">الحساب</button>
+                <button class="category-btn">المشاريع</button>
+                <button class="category-btn">الدفع</button>
+                <button class="category-btn">التقنية</button>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-question">
+                        <span>كيف يمكنني إنشاء حساب على منصة إبداع؟</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>لإنشاء حساب على منصة إبداع، اتبع الخطوات التالية:</p>
+                        <ol>
+                            <li>انقر على زر "انضم إلينا" في أعلى الصفحة</li>
+                            <li>املأ نموذج التسجيل بالبيانات المطلوبة (الاسم، البريد الإلكتروني، كلمة المرور)</li>
+                            <li>سيتم إرسال رسالة تفعيل إلى بريدك الإلكتروني</li>
+                            <li>انقر على رابط التفعيل في الرسالة لتفعيل حسابك</li>
+                            <li>يمكنك الآن تسجيل الدخول وإكمال ملفك الشخصي</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>كيف يمكنني إضافة مشروع إلى معرض الأعمال؟</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>لإضافة مشروع إلى معرض الأعمال:</p>
+                        <ol>
+                            <li>سجل الدخول إلى حسابك</li>
+                            <li>انقر على زر "إضافة مشروع" في لوحة التحكم</li>
+                            <li>املأ معلومات المشروع (العنوان، الوصف، التصنيف)</li>
+                            <li>أرفق صور المشروع بجودة عالية</li>
+                            <li>حدد المهارات المستخدمة في المشروع</li>
+                            <li>انقر على "نشر" لجعل المشروع مرئياً للجميع</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>ما هي أنواع المشاريع التي يمكنني نشرها؟</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>يمكنك نشر أي مشروع إبداعي أصلي من إبداعك الخاص، بما في ذلك:</p>
+                        <ul>
+                            <li>تصميمات الجرافيك والهوية البصرية</li>
+                            <li>تصميم واجهات المستخدم وتجربة المستخدم</li>
+                            <li>الأعمال الفنية الرقمية والتقليدية</li>
+                            <li>التصوير الفوتوغرافي</li>
+                            <li>التصميم ثلاثي الأبعاد</li>
+                            <li>أعمال الرسم والتوضيح</li>
+                            <li>التصميم المعماري والداخلي</li>
+                        </ul>
+                        <p>يرجى عدم نشر أعمال تنتهك حقوق الملكية الفكرية للآخرين.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>كيف يمكنني استعادة كلمة المرور؟</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>إذا نسيت كلمة المرور، اتبع هذه الخطوات لاستعادتها:</p>
+                        <ol>
+                            <li>انقر على "تسجيل الدخول" في أعلى الصفحة</li>
+                            <li>انقر على "نسيت كلمة المرور؟"</li>
+                            <li>أدخل عنوان البريد الإلكتروني المرتبط بحسابك</li>
+                            <li>تحقق من بريدك الإلكتروني وانقر على رابط إعادة تعيين كلمة المرور</li>
+                            <li>اختر كلمة مرور جديدة وقم بتأكيدها</li>
+                            <li>يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>كيف يمكنني التواصل مع العملاء المحتملين؟</span>
+                        <div class="faq-icon">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>توفر منصة إبداع عدة طرق للتواصل مع العملاء:</p>
+                        <ul>
+                            <li>يمكن للعملاء مراسلتك مباشرة من خلال صفحة مشروعك</li>
+                            <li>يمكنك تفعيل خيار "التوفر للعمل" في ملفك الشخصي</li>
+                            <li>اضغط زر "اتصل بي" في صفحة المشروع لبدء محادثة</li>
+                            <li>يمكنك مشاركة معلومات التواصل في قسم "نبذة عني" بملفك الشخصي</li>
+                            <li>الرد السريع على الاستفسارات يزيد من فرصك في الحصول على عمل</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="help-section">
+        <div class="container">
+            <div class="section-title">
+                <h3>دليل المساعدة</h3>
+                <p>استكشف أدلة المساعدة المفصلة لتحقيق أقصى استفادة من منصة إبداع</p>
+            </div>
+            
+            <div class="help-grid">
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h4>بدء الاستخدام</h4>
+                    <p>دليل شامل خطوة بخطوة لإنشاء حساب وإعداد ملفك الشخصي على المنصة</p>
+                    <a href="#" class="help-link">استعرض الدليل <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h4>نشر المشاريع</h4>
+                    <p>تعلم كيفية عرض أعمالك بأفضل صورة لجذب العملاء والزملاء</p>
+                    <a href="#" class="help-link">استعرض الدليل <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="help-card">
+                    <div class="help-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h4>المبيعات والدفع</h4>
+                    <p>كل ما تحتاج معرفته حول بيع أعمالك واستلام المدفوعات</p>
+                    <a href="#" class="help-link">استعرض الدليل <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact-help">
+        <div class="container">
+            <div class="contact-card">
+                <h3>لا تزال بحاجة للمساعدة؟</h3>
+                <p>فريق الدعم لدينا متاح للإجابة على استفساراتك ومساعدتك في حل أي مشكلة تواجهك</p>
+                <div class="contact-buttons">
+                    <button class="contact-btn primary">تواصل مع الدعم</button>
+                    <button class="contact-btn outline">راسلنا على البريد</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>إبداع</h4>
+                    <p>منصة رائدة لعرض الأعمال الإبداعية وتوصيل المبدعين مع العالم</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="creators.html">المبدعون</a></li>
+                        <li><a href="blog.html">المدونة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>الدعم</h4>
+                    <ul>
+                        <li><a href="help.html">المساعدة</a></li>
+                        <li><a href="help.html">الأسئلة الشائعة</a></li>
+                        <li><a href="contact.html">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>تابعنا</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 إبداع. جميع الحقوق محفوظة</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تفعيل نظام الأسئلة الشائعة
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // تفعيل أزرار التصنيفات
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                
+                // هنا يمكن إضافة منطق لتصفية الأسئلة حسب التصنيف
+                // هذا يحتاج إلى اتصال بقاعدة البيانات أو المزيد من العناصر في الصفحة
+            });
+        });
+    </script>
+</body>
+</html>
