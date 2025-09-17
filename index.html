@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إبداع - منصة الأعمال الإبداعية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #6C63FF;
@@ -64,7 +65,7 @@
             box-shadow: var(--shadow);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
         
         nav {
@@ -72,6 +73,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            position: relative;
         }
         
         .logo h1 {
@@ -110,6 +112,11 @@
             width: 100%;
         }
         
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
         .auth-buttons button {
             padding: 10px 20px;
             border-radius: 30px;
@@ -130,6 +137,24 @@
         .auth-buttons .signup:hover {
             background: var(--primary-dark);
             transform: translateY(-2px);
+        }
+        
+        /* قائمة الهاتف */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--dark);
+            border-radius: 3px;
+            transition: var(--transition);
         }
         
         /* قسم الهيرو */
@@ -588,6 +613,42 @@
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: var(--light);
+                box-shadow: var(--shadow);
+                padding: 20px;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .auth-buttons {
+                display: none;
+            }
+            
+            .mobile-auth {
+                display: flex;
+                flex-direction: column;
+                margin-top: 20px;
+            }
+            
+            .mobile-auth button {
+                margin: 5px 0;
+                width: 100%;
             }
             
             .features-grid,
@@ -621,13 +682,22 @@
                 <ul class="nav-links">
                     <li><a href="index.html">الرئيسية</a></li>
                     <li><a href="projects.html">المشاريع</a></li>
-                    <li><a href="#">المبدعون</a></li>
-                    <li><a href="#">المدونة</a></li>
-                    <li><a href="#">اتصل بنا</a></li>
+                    <li><a href="creators.html">المبدعون</a></li>
+                    <li><a href="blog.html">المدونة</a></li>
+                    <li><a href="contact.html">اتصل بنا</a></li>
+                    <div class="mobile-auth">
+                        <button class="login">تسجيل الدخول</button>
+                        <button class="signup">انضم إلينا</button>
+                    </div>
                 </ul>
                 <div class="auth-buttons">
                     <button class="login">تسجيل الدخول</button>
                     <button class="signup">انضم إلينا</button>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </nav>
         </div>
@@ -745,10 +815,10 @@
                 <div class="footer-section">
                     <h4>روابط سريعة</h4>
                     <ul>
-                        <li><a href="#">الرئيسية</a></li>
-                        <li><a href="#">المشاريع</a></li>
-                        <li><a href="#">المبدعون</a></li>
-                        <li><a href="#">المدونة</a></li>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="projects.html">المشاريع</a></li>
+                        <li><a href="creators.html">المبدعون</a></li>
+                        <li><a href="blog.html">المدونة</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -762,9 +832,9 @@
                 <div class="footer-section">
                     <h4>تابعنا</h4>
                     <div class="social-icons">
-                        <a href="#">T</a>
-                        <a href="#">I</a>
-                        <a href="#">L</a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -773,5 +843,24 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // تفعيل قائمة الهاتف
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+        
+        // إغلاق القائمة عند النقر على رابط
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
